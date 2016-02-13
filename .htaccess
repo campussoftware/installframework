@@ -1,0 +1,6 @@
+Options Indexes FollowSymLinks Includes ExecCGI
+<IfModule mod_rewrite.c>
+RewriteEngine on
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^([^?]*)$ index.php?reditectpath=$1 [NC,L,QSA]
+</IfModule>

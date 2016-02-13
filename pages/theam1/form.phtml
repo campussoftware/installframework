@@ -1,0 +1,184 @@
+<?php
+    $mandotoryAttributes=$this->mandotatoryAttributes();
+    $np=new Core_Controllers_AccessController();
+    $nodeOTMRelations=$np->NodeCheckForProfile($this->_nodeOTMRelations);
+?>
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="span12">
+			<div class="widget">
+				<div class="widget-title">
+					<h4><i class="icon-reorder"></i><?php echo $this->getLabel($this->_currentAction);?></h4>
+					<span class="tools">
+						<a href="javascript:;" class="icon-chevron-down"></a>
+					</span>
+				</div>
+			<div class="widget-body box box-success">
+                        <?php     
+                            $backUrl=$this->_websiteHostUrl;
+                            if($this->_parentNode)
+                            {
+                                $backUrl=$this->_websiteAdminUrl.$this->_parentNode."/".$this->_parentAction."/".$this->_parentSelector."/MTO/".$this->_nodeName;
+                            }
+                            if(count($nodeOTMRelations)>0 && $this->_currentAction!='add')
+                            {                                
+                        ?>
+			<ul class="nav nav-tabs">
+                                
+                            <?php
+                                $active="";
+                                if($this->_childNode=="")
+                                {
+                                    $active='class="active"';
+                                }
+                            ?>
+				<li <?php echo $active; ?>>
+                                    <a href="#tab_<?php echo $this->_nodeName; ?>" data-toggle="tab">General</a>
+                                </li>
+                                
+                                        
+                                        <?php
+                                        foreach($nodeOTMRelations as $childNode=>$linkColName)
+                                        {
+                                            $active="";
+                                            if($this->_childNode==$childNode)
+                                            {
+                                                $active='class="active"';
+                                            }
+                                            ?>
+                                        
+                                            <li <?php echo $active; ?>>
+                                            <a href="#tab_<?php echo $childNode; ?>" data-toggle="tab" onclick="return samplefun('<?php echo $childNode; ?>');" ><?php echo $this->getLabel($childNode); ?></a>
+                                            </li>
+                                            <?php
+                                        }
+                                    
+                                ?>				
+			</ul>
+                            <?php
+                            }
+                            ?>
+			<div class="tab-content">
+                                <?php
+                                    $active="";
+                                    if($this->_childNode=="")
+                                    {
+                                        $active=' active ';
+                                    }
+                                ?>
+				<div class="tab-pane <?php echo $active;?>" id="tab_<?php echo $this->_nodeName; ?>">
+
+					<form name="<?php echo $this->_nodeName; ?>" id="<?php echo $this->_nodeName; ?>" class="form-horizontal <?php echo "form_".$this->_nodeName; ?>" action="" method="POST" enctype="multipart/form-data">
+						
+						<input type="hidden" id="node" name="node" value="<?php echo $this->_nodeName;?>">
+						<input type="hidden" id="action" name="action" value="<?php echo $this->_currentAction;?>">
+						<input type="hidden" id="action_id" name="action_id" value="<?php echo $this->_currentAction;?>">                                          
+						<input type="hidden" id="id" name="id" value="<?php echo $this->_record['id']; ?>">
+						<div id="error_div" name="error_div" style="color: red;font-weight: bold;"></div>    
+						<?php                                    
+						if(count($this->_showAttributes)>0)
+						{
+							foreach($this->_showAttributes as $FieldName)
+							{
+								?>
+								<div class="control-group" id="row_<?php echo $FieldName; ?>">
+									<lable class="control-label">
+										<span id="label_<?php echo $FieldName; ?>"><?php echo $this->getLabel($FieldName); ?></span>
+										<?php 
+										$display="none";
+										if(in_array($FieldName,$mandotoryAttributes))
+										{
+											$display="display";
+										}
+										?>
+										<span id="req_<?php echo $FieldName; ?>" style="display:<?php echo $display; ?>" class="">
+											<img src="<?php echo $this->_websiteAdminUrl; ?>img/required_field.gif">
+										</span>
+									</lable>
+									<div class="control">
+										<div class="controls" id="value_<?php echo $FieldName; ?>">    
+											<?php
+											try 
+											{
+												$this->loadAttribute($FieldName);
+											} 
+											catch (Exception $ex) 
+											{
+
+											}
+
+											?>											
+										</div>
+                                                                                <span class="error_message" id="error_<?php echo $FieldName; ?>"></span>
+
+									</div>
+								</div>
+								<?php
+							}
+						}
+						?>
+
+						<div class="form-actions">
+                                                        
+                                                        <input type="hidden" id="parentformNode" name="parentformNode" value="<?php echo $this->_parentNode; ?>" >
+                                                        <input type="hidden" id="parentformkey" name="parentformkey" value="<?php echo $this->_parentColName; ?>" >
+                                                        <input type="hidden" id="parentformvalue" name="parentformvalue" value="<?php echo $this->_parentSelector; ?>" >
+                                                        <input type="hidden" id="parentformAction" name="parentformAction" value="<?php echo $this->_parentAction; ?>" >
+                                                        <input type="hidden" id="noderesult" name="noderesult" value='<?php echo json_encode($this->_jsonrecord);?>'>
+							<input type="hidden" id="noderelations" name="noderelations" value='<?php echo json_encode($this->_nodeMTORelations);?>'>
+                                                        
+							<?php
+							if($this->_currentAction!="view")
+							{
+
+							?>
+								<button type="button" id="saveandclose" name="saveandclose" class="btn btn-small btn-success formsubmit " onclick="return getformsubmit();">Save and Close</button>
+							<?php
+							}
+							?>
+							<button type="button" id="refreshsaveandclose" name="refreshsaveandclose" class="btn btn-small btn-inverse" style="display:none;" onclick="removedisable()" ;=""> <i class="icon-refresh icon-white"></i> Refresh Save and Close</button>
+							<a href="<?php echo $backUrl; ?> ">
+							<button style="margin-left:4px;" type="button" class="btn btn-primary">  <i class="icon-arrow-left"></i> BACK</button>
+							</a>	
+						</div>
+					</form>
+				</div>
+                                <?php
+                                                                          
+                                        foreach($nodeOTMRelations as $childNode=>$linkColName)
+                                        {
+                                            
+                                                $active="";
+                                                if($this->_childNode==$childNode)
+                                                {
+                                                    $active=' active ';
+                                                }
+                                           
+                                            ?>                                       
+                                            <div class="tab-pane <?php echo $active; ?>" id="tab_<?php echo $childNode; ?>">
+                                                <div id="total_<?php echo $childNode; ?>" name="total_<?php echo $childNode; ?>" >
+                                                    <form id="result_<?php echo $childNode; ?>" name="result_<?php echo $childNode; ?>" >
+                                                            <input type="hidden" id="<?php echo $childNode;?>_action_id" name="<?php echo $childNode;?>_action_id" value="admin">			
+                                                            <input type="hidden" id="<?php echo $childNode;?>_multiedit" name="<?php echo $childNode;?>_multiedit" value="0">
+                                                            <input type="hidden" id="<?php echo $childNode;?>_parentaction" name="<?php echo $childNode;?>_parentaction" value="<?php echo $this->_currentAction;?>">
+                                                            <input type="hidden" id="<?php echo $childNode;?>_parentnode" name="<?php echo $childNode;?>_parentnode" value="<?php echo $this->_nodeName; ?>">
+                                                            <input type="hidden" id="<?php echo $childNode;?>_parentidvalue" name="<?php echo $childNode;?>_parentidvalue" value="<?php echo $this->_currentSelector;?>">
+                                                    </form>
+                                                </div>
+                                            </div>                                            
+                                            <?php
+                                            if($this->_childNode==$childNode)
+                                            {
+                                                ?>
+                                                <input type="hidden" id="childdatadisplay" name="childdatadisplay" value="<?php echo $childNode;?>">
+                                                <?php
+                                            }
+                                        }
+                                    
+                                ?>
+                            </div>    
+			</div>
+		</div>
+	</div>
+    </div>
+</div>

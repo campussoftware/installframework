@@ -1,0 +1,11 @@
+/* CSS Document */
+.treeview i{
+	padding-right:10px;
+}
+.form-actions {
+    background:none;
+    border-top: none;
+}
+form {
+    margin: 20px 0 20px;
+}

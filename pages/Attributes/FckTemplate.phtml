@@ -1,0 +1,12 @@
+<?php 
+if($this->_action=='admin')
+{
+    echo $this->_Value;
+}
+else
+{
+    ?>
+<textarea class="ckeditor" id="<?php echo $this->_idName;?>" name="<?php echo $this->_idName;?>" rows="6" ><?php echo $this->_Value; ?></textarea>
+<?php
+}
+?>

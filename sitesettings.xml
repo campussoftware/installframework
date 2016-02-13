@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hostsettings>
+    <Host>
+        <websitehost>http://localhost/installframe/</websitehost>
+        <websitehostadmin>http://localhost/installframe/</websitehostadmin>
+        <documentroot>C:/wamp/www/installframe/</documentroot>
+        <identity>Core</identity>
+        <rpp>17</rpp>
+        <theme>theam1</theme>
+    </Host>
+    <Database>
+        <default>
+            <Host>localhost</Host>
+            <User>install</User>
+            <PWD>install</PWD>
+            <Name>install</Name>
+        </default>
+    </Database>
+</hostsettings>

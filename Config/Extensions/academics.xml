@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<core_developmentsettings>
+    <status>active</status>
+    <filename>academics</filename>
+    <name>academics</name>
+    <displayname>Academics</displayname>
+    <rootmodule>false</rootmodule>
+    <codemodule>false</codemodule>
+    <moduledisplay>false</moduledisplay>
+    <sort_value>1</sort_value>
+    <!-- <setuppath>Modules/Academics/Setup</setuppath>
+    <datapath>Modules/Academics/Data</datapath>     -->
+</core_developmentsettings>

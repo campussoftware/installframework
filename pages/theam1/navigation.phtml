@@ -1,0 +1,29 @@
+<?php
+    $wp=new Core_WebsiteSettings();
+    global $currentNode;
+?>
+
+<section class="content-header">
+  <h1> <?php echo $this->getLabel($currentNode); ?> </h1>
+  <ol class="breadcrumb">
+    <li> <a href="<?php echo $wp->websiteUrl; ?>"> <span class="divider" style="">Home</span> </a> <span class="divider">&nbsp;</span> </li>
+        <?php                   
+                    $navigationArray=$this->getNavigationPath();                
+                    if(count($navigationArray)>0)
+                    {                        
+                        foreach($navigationArray as $menuData)
+                        {
+                            ?>
+                            <li>
+                                <a href="<?php echo $menuData['url']; ?>">
+                                    <span class="divider" ><?php echo $menuData['label'];?></span>
+                                </a>
+                                <span class="divider">&nbsp;</span>
+                            </li>
+                            <?php
+                        }
+                    }
+
+            ?>
+  </ol>
+</section>
