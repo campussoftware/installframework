@@ -17,7 +17,7 @@ class Core_Modules_CoreUsermanagement_Controllers_CoreAccess extends Core_Contro
         $db->setTable($this->_tableName);
         $db->addWhere($this->_parentColName."='".$this->_parentSelector."'");
         $this->_existingRecord=$db->getRows("node");        
-        $this->_profileAccess=new Core_Attributes_BuildMenu();
+        $this->_profileAccess=new Core_Attributes_ProfilePrivileges();
         $this->_profileAccess->buildMenu();        
     }
     public function saveAction()
